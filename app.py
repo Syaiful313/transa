@@ -12,12 +12,12 @@ import gradio as gr
 
 from transcribe import format_segments, transcribe
 
-SERVER_HOST = "0.0.0.0"  # dengarkan semua interface agar laptop lain di jaringan bisa akses
+SERVER_HOST = "0.0.0.0"
 SERVER_PORT = 7860
-MAX_UPLOAD_SIZE = "1gb"  # cukup untuk ~1 jam WAV; mp3/m4a jauh lebih kecil
-CONCURRENT_JOBS = 1  # RAM 8 GB hanya muat 1 transkripsi sekaligus; sisanya antre
+MAX_UPLOAD_SIZE = "1gb"
+CONCURRENT_JOBS = 1
 CACHE_CLEANUP_INTERVAL_SECONDS = 3600
-CACHE_MAX_AGE_SECONDS = 86400  # rekaman & hasil di cache Gradio dihapus setelah 1 hari
+CACHE_MAX_AGE_SECONDS = 86400
 
 
 def handle_upload(audio_path: str | None) -> tuple[str, str]:
@@ -26,7 +26,7 @@ def handle_upload(audio_path: str | None) -> tuple[str, str]:
         raise gr.Error("Pilih file audio dulu.")
     try:
         segments = transcribe(Path(audio_path))
-    except RuntimeError as error:  # ffmpeg gagal decode: file rusak / bukan audio
+    except RuntimeError as error:
         raise gr.Error("File tidak bisa dibaca sebagai audio.") from error
     if not segments:
         raise gr.Error("Tidak ada suara yang terdeteksi di file ini.")

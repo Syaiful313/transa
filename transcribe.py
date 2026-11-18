@@ -61,7 +61,7 @@ def main() -> int:
     started = time.perf_counter()
     try:
         segments = transcribe(args.audio, args.language)
-    except RuntimeError as error:  # mlx_whisper melempar RuntimeError saat ffmpeg gagal decode
+    except RuntimeError as error:
         print(f"Gagal memproses audio: {error}", file=sys.stderr)
         return 1
     elapsed = time.perf_counter() - started
