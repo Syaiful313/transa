@@ -1,9 +1,3 @@
-"""Prototype: transkripsi satu file audio secara lokal dengan mlx-whisper (GPU Apple Silicon).
-
-Pemakaian:
-    uv run transcribe.py <file-audio> [--language id]
-"""
-
 import argparse
 import sys
 import time
@@ -18,7 +12,6 @@ SECONDS_PER_MINUTE = 60
 
 
 def format_timestamp(seconds: float) -> str:
-    """Ubah detik menjadi HH:MM:SS."""
     total = int(seconds)
     hours, rest = divmod(total, SECONDS_PER_HOUR)
     minutes, secs = divmod(rest, SECONDS_PER_MINUTE)
@@ -26,7 +19,6 @@ def format_timestamp(seconds: float) -> str:
 
 
 def format_segments(segments: list[dict]) -> str:
-    """Gabungkan segmen menjadi teks, satu baris per segmen dengan timestamp."""
     return "\n".join(
         f"[{format_timestamp(seg['start'])} - {format_timestamp(seg['end'])}] {seg['text']}"
         for seg in segments
@@ -34,11 +26,6 @@ def format_segments(segments: list[dict]) -> str:
 
 
 def transcribe(audio_path: Path, language: str = DEFAULT_LANGUAGE) -> list[dict]:
-    """Transkripsi audio menjadi daftar segmen {start, end, text, speaker}.
-
-    `speaker` selalu None untuk sekarang; disiapkan agar diarization (pyannote)
-    nanti cukup mengisi field ini tanpa mengubah bentuk data.
-    """
     result = mlx_whisper.transcribe(
         str(audio_path), path_or_hf_repo=MODEL_REPO, language=language
     )

@@ -1,10 +1,3 @@
-"""UI web lokal untuk transkripsi audio (Gradio).
-
-Jalankan:
-    uv run app.py
-Lalu buka http://localhost:7860 (user lain di Wi-Fi yang sama: http://<ip-mac>:7860)
-"""
-
 import tempfile
 from pathlib import Path
 
@@ -21,7 +14,6 @@ CACHE_MAX_AGE_SECONDS = 86400
 
 
 def handle_upload(audio_path: str | None) -> tuple[str, str]:
-    """Transkripsi file yang di-upload; kembalikan teks dan path file .txt untuk diunduh."""
     if not audio_path:
         raise gr.Error("Pilih file audio dulu.")
     try:
